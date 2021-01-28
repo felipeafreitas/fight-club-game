@@ -1,9 +1,37 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+function pressEnter2(e) {
+  if (e.key == "Enter" && stage == "sceneBeforeFight") {
+    clear();
+    startGame();
+    stage = "gamePlay";
+  }
+}
+
+function pressEnter1(e) {
+  if (e.key == "Enter" && stage == "tutorial") {
+    clear();
+    tutorialMusic.pause();
+    drawBeforeFightScene();
+    stage = "sceneBeforeFight";
+  }
+}
+
+let stage = "startScreen";
+
 //BACKGROUND GAME
 const bgImg = new Image();
 bgImg.src = "/images/bgcorreto.png";
+
+//PUNCH SOUND
+const punchSound = new Audio();
+punchSound.src = "/sounds/punchSound.ogg";
+
+//DYING SOUND
+const dyingSound = new Audio();
+dyingSound.src = "/sounds/die2.wav";
+
 
 //TYLER SPRITS
 const tylerStandR = new Image();
@@ -18,9 +46,24 @@ tylerPunchingR.src = "/images/sprites/tylerPunchingR.png";
 const tylerPunchingL = new Image();
 tylerPunchingL.src = "/images/sprites/tylerPunchingL.png";
 
-const tylerSprits = [tylerStandR, tylerStandL, tylerPunchingR, tylerPunchingL];
+const tylerDeadL = new Image();
+tylerDeadL.src = "/images/sprites/tylerDiedL.png";
 
-//NARATOR SPRITS
+const tylerDeadR = new Image();
+tylerDeadR.src = "/images/sprites/tylerDiedR.png";
+
+const tylerSprits = [
+  tylerStandR,
+  tylerStandL,
+  tylerPunchingR,
+  tylerPunchingL,
+  tylerDeadR,
+  tylerDeadL,
+];
+
+
+
+//NARRATOR SPRITS
 const narratorStandR = new Image();
 narratorStandR.src = "/images/sprites/narratorStandR.png";
 
@@ -33,11 +76,20 @@ narratorPunchingR.src = "/images/sprites/theNarratorPunchingR.png";
 const narratorPunchingL = new Image();
 narratorPunchingL.src = "/images/sprites/theNarratorPunchingL.png";
 
+const narratorDeadL = new Image();
+narratorDeadL.src = "/images/sprites/narratorDiedR.png";
+
+const narratorDeadR = new Image();
+narratorDeadR.src = "/images/sprites/narratorDiedL.png";
+
+
 const narratorSprits = [
   narratorStandR,
   narratorStandL,
   narratorPunchingR,
   narratorPunchingL,
+  narratorDeadL,
+  narratorDeadR
 ];
 
 function clear() {
@@ -68,7 +120,7 @@ class Fighter {
     this.hp = 100;
     this.kills = 0;
     this.dead = false;
-    this.jumping = true;
+    this.jumping = false;
     this.colliding = false;
     this.punching = false;
     this.lastDir = this.lastDir;
@@ -78,26 +130,38 @@ class Fighter {
   draw() {
     if (this.lastDir == "r" && this.punching == false && this.dead == false) {
       ctx.drawImage(this.fighterImg[0], this.x, this.y);
-    } else if (this.lastDir == "l" && this.punching == false && this.dead == false) {
+    } else if (
+      this.lastDir == "l" &&
+      this.punching == false &&
+      this.dead == false
+    ) {
       ctx.drawImage(this.fighterImg[1], this.x, this.y);
-    } else if (this.lastDir == "r" && this.punching == true && this.dead == false) {
+    } else if (
+      this.lastDir == "r" &&
+      this.punching == true &&
+      this.dead == false
+    ) {
       ctx.drawImage(this.fighterImg[2], this.x, this.y);
       setTimeout(function () {
         this.punching = false;
       }, 500);
-    } else if (this.lastDir == "l" && this.punching == true && this.dead == false) {
+    } else if (
+      this.lastDir == "l" &&
+      this.punching == true &&
+      this.dead == false
+    ) {
       ctx.drawImage(this.fighterImg[3], this.x - 15, this.y);
       setTimeout(function () {
         this.punching = false;
-      }, 500);  
-    } else if (this.lastDir == "l" && this.dead == true) {
-      ctx.drawImage(this.fighterImg[3], this.x - 15, this.y);
+      }, 500);
     } else if (this.lastDir == "r" && this.dead == true) {
-      ctx.drawImage(this.fighterImg[3], this.x - 15, this.y);
+      ctx.drawImage(this.fighterImg[4], this.x - 45, this.y);
+    } else if (this.lastDir == "l" && this.dead == true) {
+      ctx.drawImage(this.fighterImg[5], this.x - 45, this.y);
     }
   }
   newPosition() {
-    this.speedY += 10; //gravity
+    this.speedY += 15; //gravity
     this.y += this.speedY;
     this.x += this.speedX;
     this.speedY *= 0.9; //friction
@@ -152,8 +216,8 @@ class healthBar {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.player.hp * 2, this.heigth);
     ctx.font = "42px VT323";
-    ctx.fillStyle = "White"
-    ctx.fillText(`Wins: ` + this.player.kills, this.x, this.heigth + 60) ;
+    ctx.fillStyle = "White";
+    ctx.fillText(`Wins: ` + this.player.kills, this.x, this.heigth + 60);
   }
 }
 
@@ -175,16 +239,17 @@ function collisionCheck() {
 }
 
 //FUNÇÃO DE DANO
-function hit(striker, defender, healthToFill) {
-  console.log("attack");
+function hit(striker, defender) {
   striker.punching = true;
   let xDistance = Math.abs(striker.x - defender.x);
   if (xDistance < 100) {
     let damage = Math.ceil(Math.random() * 10) + 10;
-    if (defender.hp - damage < 0) {
+    punchSound.play();
+    if (defender.hp - damage <= 0) {
       defender.dead = true;
-      striker.kills++
-      respawn(striker, defender, healthToFill)
+      dyingSound.play()
+      striker.kills++;
+      respawn(striker, defender);
     } else {
       defender.hp -= damage;
     }
@@ -194,37 +259,38 @@ function hit(striker, defender, healthToFill) {
 }
 
 // RESPAWN DEFEATED PLAYER
-function respawn(striker, newLife, healthToFill) {
-  console.log("RESPAWN")
-  newLife.dead = false;
-  newLife.x = (newLife == player ? (canvas.width / 5) : canvas.width * 0.8 - 100);
-  newLife.y = 270;
-  newLife.hp = 100;
-  striker.x = (striker == player ? (canvas.width / 5) : canvas.width * 0.8 - 100)
-  }
- 
+function respawn(striker, newLife) {
+  setTimeout(function () {
+    newLife.dead = false;
+    newLife.x = newLife == player ? canvas.width / 5 : canvas.width * 0.8 - 100;
+    newLife.y = 270;
+    newLife.hp = 100;
+    striker.x = striker == player ? canvas.width / 5 : canvas.width * 0.8 - 100;
+  }, 0);
+}
+
 //FUNÇÃO ANDAR (LEFT || RIGHT)
 function left(character) {
   if (character.x <= 170) {
     character.x = 170;
     character.speedX = 0;
   } else {
-    character.speedX -= 2;
-    if (character.speedX < -8) {
-      character.speedX = -8;
+    character.speedX -= 6;
+    if (character.speedX < -18) {
+      character.speedX = -18;
     }
     character.lastDir = "l";
   }
 }
 
 function right(character) {
-  if (character.x >= canvas.width * 0.8 - 100) {
-    character.x = canvas.width * 0.8 - 100
+  if (character.x > canvas.width * 0.8 - 100) {
+    character.x = canvas.width * 0.8 - 100;
     character.speedX = 0;
   } else {
-    character.speedX += 2;
-    if (character.speedX > 8) {
-      character.speedX = 8;
+    character.speedX += 6;
+    if (character.speedX > 18) {
+      character.speedX = 18;
     }
     character.lastDir = "r";
   }
@@ -243,17 +309,29 @@ function jump(character) {
 //FUNÇÕES DO TECLADO
 document.addEventListener("keydown", (e) => {
   switch (e.key) {
-    case "ArrowLeft": // left arrow
+    case "z": // left arrow
       left(player);
       break;
-    case "ArrowRight": // right arrow
+    case "x": // right arrow
       right(player);
       break;
-    case " ": // Attack
+    case "a": // Attack
       hit(player, opponent, healthNarrator);
       break;
-    case "Shift": //Jump
+    case "s": //Jump
       jump(player);
+      break;
+    case "ArrowLeft": // left arrow
+      left(opponent);
+      break;
+    case "ArrowRight": // right arrow
+      right(opponent);
+      break;
+    case "ArrowDown": // Attack
+      hit(opponent, player, tylerHealth);
+      break;
+    case "ArrowUp": //Jump
+      jump(opponent);
       break;
   }
 });
@@ -262,6 +340,9 @@ document.addEventListener("keyup", (e) => {
   player.speedX = 0;
   player.speedY = player.speedY;
   player.punching = false;
+  opponent.speedX = 0;
+  opponent.speedY = opponent.speedY;
+  opponent.punching = false;
 });
 
 //CONFIGURANDO DISTÂNCIA ENTRE OPONENTES
@@ -277,40 +358,42 @@ function checkEnemyDistance() {
     enemy_distance_type = "middle";
   } else if (enemy_distance < 650) {
     enemy_distance_type = "far";
-  } else {
-    enemy_distance_type = "furthest";
   }
-  console.log(enemy_distance_type);
-  return enemy_distance_type;
 }
 
 //IA DO OPONENTE
 
 //FUNÇÕES
-function getCloser() {
-  if (player.x > opponent.x) {
-    right(opponent);
-    console.log("goind to right");
-  } else {
-    left(opponent);
-    console.log(opponent);
-    console.log("going to left");
-  }
-}
+// function getCloser() {
+//   if (player.x > opponent.x) {
+//     right(opponent);
+//     console.log("goind to right");
+//   } else {
+//     left(opponent);
+//     console.log(opponent);
+//     console.log("going to left");
+//   }
+// }
 
 //FUNÇÃO GERAL IA
 function ia() {
   if (enemy_distance_type === "near") {
-    return; //hit(opponent, player);
+    return "near"
   } else if (enemy_distance_type === "middle") {
-    return getCloser();
+    return "middle"
   } else if (enemy_distance_type === "far") {
-    return getCloser();
+    return "far"
   }
 }
 
 //CHECAR GAME OVER
-function checkGameOver() {}
+function checkGameOver() {
+  if (player.kills >= 3 || opponent.kills >= 3)  {
+    clear();
+    gameOverScreen();
+  }
+}
+
 //MOTOR DO GAME
 
 function updateGameArea() {
@@ -322,6 +405,8 @@ function updateGameArea() {
   healthNarrator.draw();
   ia();
   player.newPosition();
+  opponent.newPosition();
   checkEnemyDistance();
   collisionCheck();
+  checkGameOver();
 }
