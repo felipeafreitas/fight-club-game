@@ -37,7 +37,7 @@ function gameOverScreen() {
     ctx.fillText("Narrator Wins", 50, 230);
   }
 
-  setTimeout(function () {
+  //setTimeout(function () {
     ctx.font = "36px VT323";
     ctx.fillStyle = "white";
     ctx.fillText("Another one? ", (canvas.width / 6) * 4, 400);
@@ -51,5 +51,5 @@ function gameOverScreen() {
         startGame();
       }
     });
-  }, 3000);
+  //}, 3000);
 }

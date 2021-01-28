@@ -16,6 +16,8 @@ function drawStartBG() {
   );
 }
 
+let stage = "startScreen"
+
 startMusic.play();
  
 function startTitle() {

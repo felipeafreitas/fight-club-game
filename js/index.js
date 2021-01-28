@@ -18,8 +18,6 @@ function pressEnter1(e) {
   }
 }
 
-let stage = "startScreen";
-
 //BACKGROUND GAME
 const bgImg = new Image();
 bgImg.src = "/images/bgcorreto.png";
@@ -94,6 +92,7 @@ function clear() {
 // ^^ SUBSTITUIR PELO NOVO MÉTODO ^^
 
 function startGame() {
+  stage = "gamePlay";
   const gamePlaying = setInterval(updateGameArea, 50);
 }
 
@@ -211,7 +210,7 @@ class healthBar {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.player.hp * 2, this.heigth);
+    ctx.fillRect(this.x, this.y, this.player.hp*2, this.heigth);
     ctx.font = "42px VT323";
     ctx.fillStyle = "White";
     ctx.fillText(`Wins: ` + this.player.kills, this.x, this.heigth + 60);
@@ -234,11 +233,11 @@ function collisionCheck(player1, player2) {
   if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
     // console.log("collision L");
     player1.collidingL = true;
-    console.log(player1.collidingL)
+    console.log(player1.collidingL);
   } else if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
     // console.log("collision R");
     player1.collidingR = true;
-    console.log(player1.collidingR)
+    console.log(player1.collidingR);
   } else {
     player1.collidingL = false;
     player1.collidingR = false;
@@ -413,9 +412,14 @@ function updateGameArea() {
   collisionCheck(player, opponent);
   collisionCheck(opponent, player);
   player.draw();
-  tylerHealth.draw();
   opponent.draw();
-  healthNarrator.draw();
+
+  if (player.dead == false) {
+    tylerHealth.draw();
+  }
+  if (opponent.dead == false) {
+    healthNarrator.draw();
+  }
   ia();
   player.newPosition();
   opponent.newPosition();
