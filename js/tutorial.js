@@ -31,13 +31,13 @@ function tutorialScreen() {
     ctx.fillText("2.You do not talk about Fight Club", canvas.width / 2, 210);
   }, 2000);
   setTimeout(function () {
-    ctx.fillText("3.To move: Press arrows buttons", canvas.width / 2, 270);
+    ctx.fillText("3.To move Tyler: Press z(Left) and x(Right) ", canvas.width / 2, 270);
   }, 3000);
   setTimeout(function () {
-    ctx.fillText("4.To jump: Press 'z'", canvas.width / 2, 330);
+    ctx.fillText("5.To mode the Narrator: Arrowjump: Press 'a'", canvas.width / 2, 330);
   }, 4000);
   setTimeout(function () {
-    ctx.fillText("5.To punch: Press 'x'", canvas.width / 2, 390);
+    ctx.fillText("5.To punch: Press 's'", canvas.width / 2, 390);
   }, 5000);
 
 

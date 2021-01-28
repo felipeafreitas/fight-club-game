@@ -2,6 +2,8 @@ const gameoverScene = new Image();
 gameoverScene.src = "/images/gameOverImg.gif";
 
 function gameOverScreen() {
+
+  stage = "gameOver"
   
   ctx.fillStyle = "#302E26";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -26,11 +28,11 @@ function gameOverScreen() {
   );
 
   if (player.kills >= 3) {
-    ctx.font = "40px VT323";
+    ctx.font = "55px VT323";
     ctx.fillStyle = "white";
     ctx.fillText("Tyler Wins", 50, 230);
   } else if (opponent.kills >= 3) {
-    ctx.font = "40px VT323";
+    ctx.font = "55px VT323";
     ctx.fillStyle = "white";
     ctx.fillText("Narrator Wins", 50, 230);
   }
@@ -42,10 +44,12 @@ function gameOverScreen() {
     ctx.fillText("Press enter", (canvas.width / 6) * 4, 440);
 
     document.addEventListener("keydown", (e) => {
-      if (e.key == "Enter") {
+      if (e.key == "Enter" && stage == "gameOver") {
         clear();
+        player.kills = 0
+        opponent.kills = 0
         startGame();
       }
     });
-  }, 1000);
+  }, 3000);
 }

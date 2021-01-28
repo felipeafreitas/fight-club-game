@@ -32,7 +32,6 @@ punchSound.src = "/sounds/punchSound.ogg";
 const dyingSound = new Audio();
 dyingSound.src = "/sounds/die2.wav";
 
-
 //TYLER SPRITS
 const tylerStandR = new Image();
 tylerStandR.src = "/images/sprites/tylerStandR.png";
@@ -61,8 +60,6 @@ const tylerSprits = [
   tylerDeadL,
 ];
 
-
-
 //NARRATOR SPRITS
 const narratorStandR = new Image();
 narratorStandR.src = "/images/sprites/narratorStandR.png";
@@ -82,14 +79,13 @@ narratorDeadL.src = "/images/sprites/narratorDiedR.png";
 const narratorDeadR = new Image();
 narratorDeadR.src = "/images/sprites/narratorDiedL.png";
 
-
 const narratorSprits = [
   narratorStandR,
   narratorStandL,
   narratorPunchingR,
   narratorPunchingL,
   narratorDeadL,
-  narratorDeadR
+  narratorDeadR,
 ];
 
 function clear() {
@@ -121,7 +117,8 @@ class Fighter {
     this.kills = 0;
     this.dead = false;
     this.jumping = false;
-    this.colliding = false;
+    this.collidingL = false;
+    this.collidingR = false;
     this.punching = false;
     this.lastDir = this.lastDir;
     this.fighterImg = fighterImg;
@@ -155,9 +152,9 @@ class Fighter {
         this.punching = false;
       }, 500);
     } else if (this.lastDir == "r" && this.dead == true) {
-      ctx.drawImage(this.fighterImg[4], this.x - 45, this.y);
+      ctx.drawImage(this.fighterImg[4], this.x - 45, this.y + 130);
     } else if (this.lastDir == "l" && this.dead == true) {
-      ctx.drawImage(this.fighterImg[5], this.x - 45, this.y);
+      ctx.drawImage(this.fighterImg[5], this.x - 45, this.y + 130);
     }
   }
   newPosition() {
@@ -233,8 +230,18 @@ const opponent = new Fighter(
 const healthNarrator = new healthBar(opponent, 520, 30);
 
 //FUNÇÃO DE COLLISION
-function collisionCheck() {
-  if (player.crashWith(opponent)) {
+function collisionCheck(player1, player2) {
+  if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
+    // console.log("collision L");
+    player1.collidingL = true;
+    console.log(player1.collidingL)
+  } else if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
+    // console.log("collision R");
+    player1.collidingR = true;
+    console.log(player1.collidingR)
+  } else {
+    player1.collidingL = false;
+    player1.collidingR = false;
   }
 }
 
@@ -242,12 +249,12 @@ function collisionCheck() {
 function hit(striker, defender) {
   striker.punching = true;
   let xDistance = Math.abs(striker.x - defender.x);
-  if (xDistance < 100) {
+  if (xDistance < 100 && defender.dead == false) {
     let damage = Math.ceil(Math.random() * 10) + 10;
     punchSound.play();
     if (defender.hp - damage <= 0) {
       defender.dead = true;
-      dyingSound.play()
+      dyingSound.play();
       striker.kills++;
       respawn(striker, defender);
     } else {
@@ -266,13 +273,15 @@ function respawn(striker, newLife) {
     newLife.y = 270;
     newLife.hp = 100;
     striker.x = striker == player ? canvas.width / 5 : canvas.width * 0.8 - 100;
-  }, 0);
+  }, 2000);
 }
 
 //FUNÇÃO ANDAR (LEFT || RIGHT)
 function left(character) {
   if (character.x <= 170) {
     character.x = 170;
+    character.speedX = 0;
+  } else if (character.collidingL == true) {
     character.speedX = 0;
   } else {
     character.speedX -= 6;
@@ -286,6 +295,8 @@ function left(character) {
 function right(character) {
   if (character.x > canvas.width * 0.8 - 100) {
     character.x = canvas.width * 0.8 - 100;
+    character.speedX = 0;
+  } else if (character.collidingR == true) {
     character.speedX = 0;
   } else {
     character.speedX += 6;
@@ -378,17 +389,17 @@ function checkEnemyDistance() {
 //FUNÇÃO GERAL IA
 function ia() {
   if (enemy_distance_type === "near") {
-    return "near"
+    return "near";
   } else if (enemy_distance_type === "middle") {
-    return "middle"
+    return "middle";
   } else if (enemy_distance_type === "far") {
-    return "far"
+    return "far";
   }
 }
 
 //CHECAR GAME OVER
 function checkGameOver() {
-  if (player.kills >= 3 || opponent.kills >= 3)  {
+  if (player.kills >= 3 || opponent.kills >= 3) {
     clear();
     gameOverScreen();
   }
@@ -399,6 +410,8 @@ function checkGameOver() {
 function updateGameArea() {
   clear();
   printBackground();
+  collisionCheck(player, opponent);
+  collisionCheck(opponent, player);
   player.draw();
   tylerHealth.draw();
   opponent.draw();
@@ -407,6 +420,5 @@ function updateGameArea() {
   player.newPosition();
   opponent.newPosition();
   checkEnemyDistance();
-  collisionCheck();
   checkGameOver();
 }
