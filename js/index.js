@@ -5,6 +5,7 @@ function pressEnter2(e) {
   if (e.key == "Enter" && stage == "sceneBeforeFight") {
     clear();
     startGame();
+    pixiesMusic.pause();
     stage = "gamePlay";
   }
 }
@@ -230,12 +231,12 @@ const healthNarrator = new healthBar(opponent, 520, 30);
 
 //FUNÇÃO DE COLLISION
 function collisionCheck(player1, player2) {
-  if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
+  if (player1.x < player2.x + 77 && player1.x > player2.x) {
     // console.log("collision L");
     player1.collidingL = true;
     console.log(player1.collidingL);
-  } else if (player1.x + 77 > player2.x && player1.x + 77 < player2.x) {
-    // console.log("collision R");
+  } else if (player1.x + 77 > player2.x && player1.x + 77 < player2.x + 77) {
+    console.log("collision R");
     player1.collidingR = true;
     console.log(player1.collidingR);
   } else {
@@ -272,6 +273,7 @@ function respawn(striker, newLife) {
     newLife.y = 270;
     newLife.hp = 100;
     striker.x = striker == player ? canvas.width / 5 : canvas.width * 0.8 - 100;
+    striker.hp = 100;
   }, 2000);
 }
 
@@ -280,7 +282,7 @@ function left(character) {
   if (character.x <= 170) {
     character.x = 170;
     character.speedX = 0;
-  } else if (character.collidingL == true) {
+  } else if (character.collidingL == true || character.dead == true) {
     character.speedX = 0;
   } else {
     character.speedX -= 6;
@@ -295,7 +297,7 @@ function right(character) {
   if (character.x > canvas.width * 0.8 - 100) {
     character.x = canvas.width * 0.8 - 100;
     character.speedX = 0;
-  } else if (character.collidingR == true) {
+  } else if (character.collidingR == true || character.dead == true) {
     character.speedX = 0;
   } else {
     character.speedX += 6;

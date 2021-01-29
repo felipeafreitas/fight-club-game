@@ -1,12 +1,18 @@
 const beforeFightScene = new Image();
 beforeFightScene.src = "./images/wannaFightScene.gif";
 
+const pixiesMusic = new Audio();
+pixiesMusic.src = "./sounds/soundTutorial.mp3";
+pixiesMusic.volume = 0.3;
+
 function drawBeforeFightScene() {
   ctx.drawImage(
     beforeFightScene,
     canvas.width / 2 - (bgImgStart.width * bgProportion) / 2,
     20
   );
+
+  pixiesMusic.play();
 
   ctx.font = "40px VT323";
   ctx.fillStyle = "white";

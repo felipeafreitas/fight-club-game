@@ -2,10 +2,8 @@ const theCharacters = new Image();
 theCharacters.src = "./images/theCharacters.png";
 
 const tutorialMusic = new Audio();
-tutorialMusic.src = "./sounds/soundTutorial.mp3";
-tutorialMusic.volume = 0.3;
-
-//document.removeEventListener("keydown", pressEnter);
+tutorialMusic.src = "./sounds/Where Is My Mind.mp3";
+tutorialMusic.volume = 0.2;
 
 function tutorialScreen() {
   tutorialMusic.play();

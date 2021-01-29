@@ -1,9 +1,6 @@
 const bgImgStart = new Image();
 bgImgStart.src = "./images/bgImg_startScreen.png";
 
-const startMusic = new Audio();
-startMusic.src = "./sounds/Where Is My Mind.mp3";
-startMusic.volume = 0.2;
 const bgProportion = 0.8;
 
 function drawStartBG() {
@@ -17,8 +14,6 @@ function drawStartBG() {
 }
 
 let stage = "startScreen";
-
-startMusic.play();
 
 function startTitle() {
   ctx.font = "62px VT323";
@@ -38,7 +33,6 @@ function pressEnter(e) {
   if (e.key == "Enter" && stage == "startScreen") {
     clearInterval(loopStartScreen);
     clear();
-    startMusic.pause();
     tutorialScreen();
     stage = "tutorial";
   }
