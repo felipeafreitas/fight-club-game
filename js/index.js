@@ -20,34 +20,34 @@ function pressEnter1(e) {
 
 //BACKGROUND GAME
 const bgImg = new Image();
-bgImg.src = "../images/bgcorreto.png";
+bgImg.src = "./images/bgcorreto.png";
 
 //PUNCH SOUND
 const punchSound = new Audio();
-punchSound.src = "../sounds/punchSound.ogg";
+punchSound.src = "./sounds/punchSound.ogg";
 
 //DYING SOUND
 const dyingSound = new Audio();
-dyingSound.src = "../sounds/die2.wav";
+dyingSound.src = "./sounds/die2.wav";
 
 //TYLER SPRITS
 const tylerStandR = new Image();
-tylerStandR.src = "../images/sprites/tylerStandR.png";
+tylerStandR.src = "./images/sprites/tylerStandR.png";
 
 const tylerStandL = new Image();
-tylerStandL.src = "../images/sprites/tylerStandL.png";
+tylerStandL.src = "./images/sprites/tylerStandL.png";
 
 const tylerPunchingR = new Image();
-tylerPunchingR.src = "../images/sprites/tylerPunchingR.png";
+tylerPunchingR.src = "./images/sprites/tylerPunchingR.png";
 
 const tylerPunchingL = new Image();
-tylerPunchingL.src = "../images/sprites/tylerPunchingL.png";
+tylerPunchingL.src = "./images/sprites/tylerPunchingL.png";
 
 const tylerDeadL = new Image();
-tylerDeadL.src = "../images/sprites/tylerDiedL.png";
+tylerDeadL.src = "./images/sprites/tylerDiedL.png";
 
 const tylerDeadR = new Image();
-tylerDeadR.src = "../images/sprites/tylerDiedR.png";
+tylerDeadR.src = "./images/sprites/tylerDiedR.png";
 
 const tylerSprits = [
   tylerStandR,
@@ -210,7 +210,7 @@ class healthBar {
   }
   draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.player.hp*2, this.heigth);
+    ctx.fillRect(this.x, this.y, this.player.hp * 2, this.heigth);
     ctx.font = "42px VT323";
     ctx.fillStyle = "White";
     ctx.fillText(`Wins: ` + this.player.kills, this.x, this.heigth + 60);

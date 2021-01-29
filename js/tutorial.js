@@ -1,8 +1,8 @@
 const theCharacters = new Image();
-theCharacters.src = "../images/theCharacters.png";
+theCharacters.src = "./images/theCharacters.png";
 
 const tutorialMusic = new Audio();
-tutorialMusic.src = "../sounds/soundTutorial.mp3";
+tutorialMusic.src = "./sounds/soundTutorial.mp3";
 tutorialMusic.volume = 0.3;
 
 //document.removeEventListener("keydown", pressEnter);
