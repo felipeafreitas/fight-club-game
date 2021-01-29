@@ -61,7 +61,7 @@ const tylerSprits = [
 
 //NARRATOR SPRITS
 const narratorStandR = new Image();
-narratorStandR.src = "../images/sprites/narratorStandR.png";
+narratorStandR.src = "./images/sprites/narratorStandR.png";
 
 const narratorStandL = new Image();
 narratorStandL.src = "./images/sprites/narratorStandL.png";
