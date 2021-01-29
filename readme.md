@@ -3,7 +3,7 @@
 ![enter image description here](https://64.media.tumblr.com/b379b5e087f0d6a5dd5b5833cbe9431b/tumblr_nok6s7zCOv1uq29vio1_1280.png)
 
 _Fight Club_ is a game built in HTML, CSS, and JavaScript.
->Click [HERE](https://gtretow.github.io/Snatcher-/) to play!
+>Click [HERE](https://sincopeiro.github.io/fight-club-game/) to play!
 
 
 ## ABOUT THE GAME
