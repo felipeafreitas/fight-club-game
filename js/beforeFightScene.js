@@ -1,5 +1,5 @@
 const beforeFightScene = new Image();
-beforeFightScene.src = "./images/wannaFightScene.gif";
+beforeFightScene.src = "../images/wannaFightScene.gif";
 
 function drawBeforeFightScene() {
   ctx.drawImage(

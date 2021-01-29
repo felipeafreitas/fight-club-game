@@ -20,34 +20,34 @@ function pressEnter1(e) {
 
 //BACKGROUND GAME
 const bgImg = new Image();
-bgImg.src = "./images/bgcorreto.png";
+bgImg.src = "../images/bgcorreto.png";
 
 //PUNCH SOUND
 const punchSound = new Audio();
-punchSound.src = "./sounds/punchSound.ogg";
+punchSound.src = "../sounds/punchSound.ogg";
 
 //DYING SOUND
 const dyingSound = new Audio();
-dyingSound.src = "./sounds/die2.wav";
+dyingSound.src = "../sounds/die2.wav";
 
 //TYLER SPRITS
 const tylerStandR = new Image();
-tylerStandR.src = "./images/sprites/tylerStandR.png";
+tylerStandR.src = "../images/sprites/tylerStandR.png";
 
 const tylerStandL = new Image();
-tylerStandL.src = "./images/sprites/tylerStandL.png";
+tylerStandL.src = "../images/sprites/tylerStandL.png";
 
 const tylerPunchingR = new Image();
-tylerPunchingR.src = "./images/sprites/tylerPunchingR.png";
+tylerPunchingR.src = "../images/sprites/tylerPunchingR.png";
 
 const tylerPunchingL = new Image();
-tylerPunchingL.src = "./images/sprites/tylerPunchingL.png";
+tylerPunchingL.src = "../images/sprites/tylerPunchingL.png";
 
 const tylerDeadL = new Image();
-tylerDeadL.src = "/images/sprites/tylerDiedL.png";
+tylerDeadL.src = "../images/sprites/tylerDiedL.png";
 
 const tylerDeadR = new Image();
-tylerDeadR.src = "./images/sprites/tylerDiedR.png";
+tylerDeadR.src = "../images/sprites/tylerDiedR.png";
 
 const tylerSprits = [
   tylerStandR,
@@ -60,22 +60,22 @@ const tylerSprits = [
 
 //NARRATOR SPRITS
 const narratorStandR = new Image();
-narratorStandR.src = "/images/sprites/narratorStandR.png";
+narratorStandR.src = "../images/sprites/narratorStandR.png";
 
 const narratorStandL = new Image();
-narratorStandL.src = "/images/sprites/narratorStandL.png";
+narratorStandL.src = "../images/sprites/narratorStandL.png";
 
 const narratorPunchingR = new Image();
-narratorPunchingR.src = "/images/sprites/theNarratorPunchingR.png";
+narratorPunchingR.src = "../images/sprites/theNarratorPunchingR.png";
 
 const narratorPunchingL = new Image();
-narratorPunchingL.src = "/images/sprites/theNarratorPunchingL.png";
+narratorPunchingL.src = "../images/sprites/theNarratorPunchingL.png";
 
 const narratorDeadL = new Image();
-narratorDeadL.src = "/images/sprites/narratorDiedR.png";
+narratorDeadL.src = "../images/sprites/narratorDiedR.png";
 
 const narratorDeadR = new Image();
-narratorDeadR.src = "/images/sprites/narratorDiedL.png";
+narratorDeadR.src = "../images/sprites/narratorDiedL.png";
 
 const narratorSprits = [
   narratorStandR,

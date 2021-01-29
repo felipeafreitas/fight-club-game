@@ -1,8 +1,8 @@
 const theCharacters = new Image();
-theCharacters.src = "./images/theCharacters.png";
+theCharacters.src = "../images/theCharacters.png";
 
 const tutorialMusic = new Audio();
-tutorialMusic.src = "./sounds/soundTutorial.mp3";
+tutorialMusic.src = "../sounds/soundTutorial.mp3";
 tutorialMusic.volume = 0.3;
 
 //document.removeEventListener("keydown", pressEnter);
@@ -25,31 +25,49 @@ function tutorialScreen() {
   ctx.font = "30px VT323";
   ctx.fillStyle = "black";
   setTimeout(function () {
-    ctx.fillText("1.You do not talk about Fight Club", canvas.width / 2-40, 120);
+    ctx.fillText(
+      "1.You do not talk about Fight Club",
+      canvas.width / 2 - 40,
+      120
+    );
   }, 1000);
   setTimeout(function () {
-    ctx.fillText("2.You do not talk about Fight Club", canvas.width / 2-40, 160);
+    ctx.fillText(
+      "2.You do not talk about Fight Club",
+      canvas.width / 2 - 40,
+      160
+    );
   }, 2000);
   setTimeout(function () {
-    ctx.fillText("3. Tyler Keyboard Commands", canvas.width / 2-40, 200);
+    ctx.fillText("3. Tyler Keyboard Commands", canvas.width / 2 - 40, 200);
   }, 3000);
   setTimeout(function () {
-    ctx.fillText("Move Left/Right: 'z' and 'x'", canvas.width / 2+20-40, 240);
+    ctx.fillText(
+      "Move Left/Right: 'z' and 'x'",
+      canvas.width / 2 + 20 - 40,
+      240
+    );
   }, 4000);
   setTimeout(function () {
-    ctx.fillText("Punch/Jump: 'a' and 's'", canvas.width / 2+20-40, 280);
+    ctx.fillText("Punch/Jump: 'a' and 's'", canvas.width / 2 + 20 - 40, 280);
   }, 5000);
   setTimeout(function () {
-    ctx.fillText("4. Narrator Keyboard Commands", canvas.width / 2-40, 320);
+    ctx.fillText("4. Narrator Keyboard Commands", canvas.width / 2 - 40, 320);
   }, 6000);
   setTimeout(function () {
-    ctx.fillText("Move Left/Right: Left and Right Arrow", canvas.width / 2+20-40, 360);
+    ctx.fillText(
+      "Move Left/Right: Left and Right Arrow",
+      canvas.width / 2 + 20 - 40,
+      360
+    );
   }, 7000);
   setTimeout(function () {
-    ctx.fillText("Jump/Punch: Up and Down Arrow", canvas.width / 2+20-40, 400);
+    ctx.fillText(
+      "Jump/Punch: Up and Down Arrow",
+      canvas.width / 2 + 20 - 40,
+      400
+    );
   }, 8000);
-
-
 
   setTimeout(function () {
     ctx.font = "30px VT323";
