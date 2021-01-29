@@ -63,19 +63,19 @@ const narratorStandR = new Image();
 narratorStandR.src = "../images/sprites/narratorStandR.png";
 
 const narratorStandL = new Image();
-narratorStandL.src = "../images/sprites/narratorStandL.png";
+narratorStandL.src = "./images/sprites/narratorStandL.png";
 
 const narratorPunchingR = new Image();
-narratorPunchingR.src = "../images/sprites/theNarratorPunchingR.png";
+narratorPunchingR.src = "./images/sprites/theNarratorPunchingR.png";
 
 const narratorPunchingL = new Image();
-narratorPunchingL.src = "../images/sprites/theNarratorPunchingL.png";
+narratorPunchingL.src = "./images/sprites/theNarratorPunchingL.png";
 
 const narratorDeadL = new Image();
-narratorDeadL.src = "../images/sprites/narratorDiedR.png";
+narratorDeadL.src = "./images/sprites/narratorDiedR.png";
 
 const narratorDeadR = new Image();
-narratorDeadR.src = "../images/sprites/narratorDiedL.png";
+narratorDeadR.src = "./images/sprites/narratorDiedL.png";
 
 const narratorSprits = [
   narratorStandR,
