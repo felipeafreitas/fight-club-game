@@ -1,5 +1,5 @@
 const gameoverScene = new Image();
-gameoverScene.src = "/images/gameOverImg.gif";
+gameoverScene.src = "./images/gameOverImg.gif";
 
 function gameOverScreen() {
 

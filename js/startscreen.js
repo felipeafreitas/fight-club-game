@@ -1,8 +1,8 @@
 const bgImgStart = new Image();
-bgImgStart.src = "/images/bgImg_startScreen.png";
+bgImgStart.src = "./images/bgImg_startScreen.png";
 
 const startMusic = new Audio();
-startMusic.src = "/sounds/Where Is My Mind.mp3";
+startMusic.src = "./sounds/Where Is My Mind.mp3";
 startMusic.volume = 0.2;
 const bgProportion = 0.8;
 
